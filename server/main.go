@@ -14,7 +14,6 @@ type notesService struct {
 	CurrentId int32
 }
 
-// GetAllNotes implements notes.NotesService
 func (s *notesService) GetAllNotes(ctx context.Context, params *notes.GetAllNotesParams) (*notes.GetAllNotesResult, error) {
 	allNotes := make([]*notes.Note, 0)
 
@@ -52,5 +51,8 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle(notesServer.PathPrefix(), notesServer)
 
-	http.ListenAndServe(":8000", notesServer)
+	err := http.ListenAndServe(":8000", notesServer)
+	if err != nil {
+		panic(err)
+	}
 }
